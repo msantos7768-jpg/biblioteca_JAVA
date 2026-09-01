@@ -44,6 +44,11 @@ public class Biblioteca {
     }
 
     public void cadastrarUsuario(String nome, String email){
+        for (int i = 0; i < usuarios.size(); i++){
+            if (usuarios.get(i).getEmail().equals(email)){
+                System.out.println("E-mail já existente");
+            }
+        }
         Usuario usuario = new Usuario(proximoIdUsuario, nome, email);
         usuarios.add(usuario);
 
