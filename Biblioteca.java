@@ -1,6 +1,7 @@
 package biblioteca;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 ///
 public class Biblioteca {
@@ -44,7 +45,13 @@ public class Biblioteca {
     }
 
     public void cadastrarUsuario(String nome, String email){
-        Usuario usuario = new Usuario(proximoIdUsuario, nome, email);
+        Usuario usuario = null;
+           for (int i = 0; i < usuarios.size(); i++) {
+                if (usuarios.get(i).getEmail().equals(email)) {
+                    System.out.println("E-mail já existente");
+                }
+            }
+        usuario = new Usuario(proximoIdUsuario, nome, email);
         usuarios.add(usuario);
 
         proximoIdUsuario++;
@@ -96,7 +103,7 @@ public class Biblioteca {
 
         }
         else{
-            System.out.println("Livro indisponível");
+            throw new LivroIndisponívelException("Livro indisponível para empréstimo!");
         }
     }
 
@@ -113,9 +120,6 @@ public class Biblioteca {
                         livro.setDisponibilidade(true);
                         emprestimoPosition.setAtivo(false);
                         System.out.println("Devolução realizada");
-                        break;
-                    } else if (!emprestimoPosition.isAtivo()) {
-                        System.out.println("O livro não está em empréstimo");
                         break;
                     }
                 }
@@ -138,5 +142,66 @@ public class Biblioteca {
                     + "\nStatus de empréstimo: " + status + "\n");
         }
     }
+
+    public Emprestimo buscarEmprestimoAtivoPorLivro(int idLivro) {
+        for (int i = 0; i < emprestimos.size(); i++) {
+
+            Emprestimo emprestimo = emprestimos.get(i);
+
+            if (emprestimo.getLivro().getId() == idLivro
+                    && emprestimo.isAtivo()) {
+
+                return emprestimo;
+            }
+        }
+
+        throw new LivroNaoEmprestadoException(
+                "O livro não está em empréstimo"
+        );
+    }
+    public Usuario tentativasUsuario(Scanner scanner){
+        int tentativas = 0;
+        Usuario usuario = null;
+
+        while (tentativas < 3 && usuario == null){
+            int idUsuario = scanner.nextInt();
+            usuario = buscarUsuarioPorId(idUsuario);
+            if(usuario == null){
+                tentativas++;
+
+                if(tentativas < 3){
+                    System.out.println("Usuário não encontrado. Tente novamente");
+                }
+            }
+        }
+        if(usuario == null){
+            System.out.println("Número de tentativas atingido. Tente novamente!");
+        }
+
+        return  usuario;
+    }
+
+    public Livro tentativasLivro(Scanner scanner){
+        int tentativas = 0;
+        Livro livro = null;
+
+        while (tentativas < 3 && livro == null){
+            int idLivro = scanner.nextInt();
+            livro = buscarLivroPorId(idLivro);
+            if(livro == null){
+                tentativas++;
+
+                if(tentativas <3){
+                    System.out.println("Livro não encontrado. Tente novamente.");
+                }
+            }
+        }
+        if (livro == null){
+            System.out.println("Número de tentativas atingido. Tente novamente!");
+        }
+
+        return livro;
+    }
+
 
 }
