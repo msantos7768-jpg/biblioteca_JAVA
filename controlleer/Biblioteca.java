@@ -208,12 +208,11 @@ public class Biblioteca {
         return  usuario;
     }
 
-    public Livro tentativasLivro(Scanner scanner){
+    public Livro tentativasLivro(int idLivro){
         int tentativas = 0;
         Livro livro = null;
 
         while (tentativas < 3 && livro == null){
-            int idLivro = scanner.nextInt();
             livro = buscarLivroPorId(idLivro);
             if(livro == null){
                 tentativas++;
@@ -230,5 +229,7 @@ public class Biblioteca {
         return livro;
     }
 
+    public void livrosDisponiveis(){
 
+    }
 }
