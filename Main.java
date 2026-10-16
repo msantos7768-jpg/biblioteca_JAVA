@@ -116,9 +116,60 @@ public class Main {
             }
             else if(escolha == 6){
                 System.out.println("\n====DEVOLUÇÃO====");
-                System.out.println("Digite o ID do livro: ");
-                int idLivro = scanner.nextInt();
-                biblioteca.devolverLivro(idLivro);
+
+                int tentativas = 0;
+                Usuario usuario = null;
+                while (tentativas <3 && usuario == null){
+                    System.out.println("Digite o ID do usuário: ");
+                    int idUsuario = scanner.nextInt();
+                    usuario = biblioteca.buscarUsuarioPorId(idUsuario);
+                    if (usuario == null){
+                        tentativas++;
+
+                        if(tentativas < 3){
+                            System.out.println("Usuário não encontrado, tente novamente!");
+                        }
+                    }
+                }
+                if(usuario == null){
+                    System.out.println("Número máximo de tentativas excedido.");
+                }
+                else{
+                    tentativas = 0;
+                    Livro livro = null;
+                    while (tentativas < 3 && livro == null){
+                        System.out.println("Digite o ID do livro: ");
+                        int idLivro = scanner.nextInt();
+                        livro = biblioteca.buscarLivroPorId(idLivro);
+                        if(livro == null){
+                            tentativas++;
+                            if (tentativas <3){
+                                System.out.println("Livro não identificado, tente novamente!");
+                            }
+                        }
+                    }
+                    if(livro == null){
+                        System.out.println("Número de tentativas excedido, devolução cancelada...");
+                    }
+                    else {
+                        System.out.println("\n====Confirmação====");
+                        System.out.println("Usuário: " + usuario.getNome());
+                        System.out.println("Livro: " + livro.getTitulo());
+                        System.out.println("Deseja confirmar a devolução");
+                        System.out.println("1 - Sim");
+                        System.out.println("2 - Não");
+                        int op = scanner.nextInt();
+                        if (op == 1){
+                            biblioteca.devolverLivro(livro.getId());
+                        }
+                        else if (op == 2){
+                            System.out.println("Processo de devolução encerrado");
+                        }
+                        else{
+                            System.out.println("Opção inválida!");
+                        }
+                    }
+                }
             }
             else if(escolha == 7){
                 System.out.println("====LISTA DE EMPRÉSTIMOS====");
@@ -127,7 +178,6 @@ public class Main {
             mostrarMenu();
             System.out.println("Escolha a opção desejada: ");
             escolha = scanner.nextInt();
-            buffer = scanner.nextLine();
         }
         scanner.close();//fechamento da classe scanner
     }
