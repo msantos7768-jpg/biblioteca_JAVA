@@ -101,38 +101,57 @@ public class Main {
 
                 System.out.println("\n====DEVOLUÇÃO====");
 
-                System.out.println("Digite o ID do usuário: ");
-                Usuario usuario = biblioteca.tentativasUsuario(scanner);
+                int tentativas = 0;
+                Usuario usuario = null;
+                while (tentativas <3 && usuario == null){
+                    System.out.println("Digite o ID do usuário: ");
+                    int idUsuario = scanner.nextInt();
+                    usuario = biblioteca.buscarUsuarioPorId(idUsuario);
+                    if (usuario == null){
+                        tentativas++;
 
-                System.out.println("Digite o ID do livro: ");
-                Livro livro = biblioteca.tentativasLivro(scanner);
-
-                if (usuario != null && livro != null) {
-
-                    try {
-                        Emprestimo emprestimo = biblioteca.buscarEmprestimoAtivoPorLivro(livro.getId());
-
+                        if(tentativas < 3){
+                            System.out.println("Usuário não encontrado, tente novamente!");
+                        }
+                    }
+                }
+                if(usuario == null){
+                    System.out.println("Número máximo de tentativas excedido.");
+                }
+                else{
+                    tentativas = 0;
+                    Livro livro = null;
+                    while (tentativas < 3 && livro == null){
+                        System.out.println("Digite o ID do livro: ");
+                        int idLivro = scanner.nextInt();
+                        livro = biblioteca.buscarLivroPorId(idLivro);
+                        if(livro == null){
+                            tentativas++;
+                            if (tentativas <3){
+                                System.out.println("Livro não identificado, tente novamente!");
+                            }
+                        }
+                    }
+                    if(livro == null){
+                        System.out.println("Número de tentativas excedido, devolução cancelada...");
+                    }
+                    else {
                         System.out.println("\n====Confirmação====");
                         System.out.println("Usuário: " + usuario.getNome());
                         System.out.println("Livro: " + livro.getTitulo());
                         System.out.println("Deseja confirmar a devolução");
                         System.out.println("1 - Sim");
                         System.out.println("2 - Não");
-
                         int op = scanner.nextInt();
-
-                        if (op == 1) {
+                        if (op == 1){
                             biblioteca.devolverLivro(livro.getId());
                         }
-                        else if (op == 2) {
+                        else if (op == 2){
                             System.out.println("Processo de devolução encerrado");
                         }
-                        else {
+                        else{
                             System.out.println("Opção inválida!");
                         }
-
-                    } catch (LivroNaoEmprestadoException e) {
-                        System.out.println(e.getMessage());
                     }
                 }
             }
