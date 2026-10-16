@@ -115,24 +115,31 @@ public class Biblioteca {
         }
     }
 
-    public void devolverLivro(int idLivro) {
+    public void devolverLivro(int idUsuario, int idLivro)
+            throws LivroNaoEmprestadoException {
         Livro livro = buscarLivroPorId(idLivro);
         if (livro == null) {
-            System.out.println("Opção inválida, livro não identificado");
-        } else {
-            for (int i = 0; i < emprestimos.size(); i++) {
-                Emprestimo emprestimoPosition = emprestimos.get(i); //acessando a posição do empréstimo
-                if (livro == emprestimoPosition.getLivro()) { //acessando o livro dentro da posição da lista
-                    if (emprestimoPosition.isAtivo()) {
-                        System.out.println("Empréstimo encontrado!");
-                        livro.setDisponibilidade(true);
-                        emprestimoPosition.setAtivo(false);
-                        System.out.println("Devolução realizada");
-                        break;
-                    }
-                }
+            throw new LivroNaoEmprestadoException(
+                    "Livro não identificado."
+            );
+        }
+        for (int i = 0; i < emprestimos.size(); i++) {
+            Emprestimo emprestimo = emprestimos.get(i);
+
+            if (emprestimo.getLivro().getId() == idLivro
+                    && emprestimo.getUsuario().getId() == idUsuario
+                    && emprestimo.isAtivo()) {
+
+                livro.setDisponibilidade(true);
+                emprestimo.setAtivo(false);
+
+                System.out.println("Devolução realizada com sucesso!");
+                return;
             }
         }
+        throw new LivroNaoEmprestadoException(
+                "Não foi encontrado empréstimo ativo desse livro para este usuário."
+        );
     }
     public void consultarEmprestimos(){
 
@@ -230,6 +237,10 @@ public class Biblioteca {
     }
 
     public void livrosDisponiveis(){
-
+        for (int i =0; i <livros.size();i++) {
+            if (livros.get(i).isDisponibilidade()){
+                System.out.println(i);
+            }
+        }
+        }
     }
-}
