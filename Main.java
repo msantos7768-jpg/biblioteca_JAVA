@@ -21,7 +21,7 @@ public class Main {
 
     public static void menuBibliotecario() {
         System.out.println("====SISTEMA DE BIBLIOTECA====");
-        System.out.println("----Menu----");
+        System.out.println("----Menu-----");
         System.out.println("\n1 - Cadastrar livro\n2 - Listar Livros\n3 - Cadastrar estudante\n4 - Listar usuários\n5 - Consultar todos empréstimos\n" +
                 "6 - Consultar empréstimo por ID\n 0 - Retornar ao menu de usuários\"");
     }
