@@ -1,10 +1,12 @@
 package biblioteca.model;
 
+import java.math.BigInteger;
+
 public class estudante extends Usuario {
     private String curso;
-    private int matricula;
+    private BigInteger matricula;
 
-    public estudante(int id, String nome, String email, String curso, int matricula) {
+    public estudante(int id, String nome, String email, String curso, BigInteger matricula) {
         super(id, nome, email);
     }
 
@@ -16,11 +18,11 @@ public class estudante extends Usuario {
         this.curso = curso;
     }
 
-    public int getMatricula() {
+    public BigInteger getMatricula() {
         return matricula;
     }
 
-    public void setMatricula(int matricula) {
+    public void setMatricula(BigInteger matricula) {
         this.matricula = matricula;
     }
 }

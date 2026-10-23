@@ -7,6 +7,7 @@ import biblioteca.model.Emprestimo;
 import biblioteca.model.Livro;
 import biblioteca.model.Usuario;
 
+import java.math.BigInteger;
 import java.util.Scanner;
 
 public class Main {
@@ -41,16 +42,18 @@ public class Main {
         int opUsuario = scanner.nextInt();
 
         while (opUsuario != 0) {
+            //Painel bibliotecário
             if (opUsuario == 1) {
-                menuBibliotecario();
-                System.out.println("Escolha a opção desejada: ");
-                int opBibliotecario = scanner.nextInt();
+                int opBibliotecario = -1;
                 while(opBibliotecario !=0) {
+                    menuBibliotecario();
+                    System.out.println("Escolha a opção desejada: ");
+                    opBibliotecario = scanner.nextInt();
                     if (opBibliotecario == 1) {
                         System.out.println("\n====CADASTRO DE LIVROS====");
                         System.out.println("Digite o título do livro: ");
-                        String titulo = scanner.nextLine();
                         String buffer = scanner.nextLine();
+                        String titulo = scanner.nextLine();
                         System.out.println("Digite o nome do autor: ");
                         String autor = scanner.nextLine();
                         biblioteca.cadastrarLivro(titulo, autor);
@@ -60,14 +63,14 @@ public class Main {
                     } else if (opBibliotecario == 3) {
                         System.out.println("\n====CADASTRO DE ESTUDANTE====");
                         System.out.println("Digite o nome do aluno: ");
-                        String nome = scanner.nextLine();
                         String buffer = scanner.nextLine();
+                        String nome = scanner.nextLine();
                         System.out.println("Digite seu e-mail: ");
                         String email = scanner.nextLine();
                         System.out.println("Digite o curso: ");
                         String curso = scanner.nextLine();
                         System.out.println("Digite o número de mátricula");
-                        int matricula = scanner.nextInt();
+                        BigInteger matricula = scanner.nextBigInteger();
                         biblioteca.cadastrarUsuario(nome, email, curso, matricula);
                     } else if (opBibliotecario == 4) {
                         System.out.println("====LISTAR ESTUDANTES CADASTRADOS====");
@@ -83,16 +86,21 @@ public class Main {
                         if (usuario != null) {
                             biblioteca.consultarEmprestimosPorIdUsuario(idUsuario);
                         }
+                    }else if (opBibliotecario!=0){
+                        System.out.println("Opção inválida!");
                     }
                 }
                 painelUsuarios();
                 System.out.println("Escolha seu perfil de usuário");
                 opUsuario = scanner.nextInt();
+
+                //Painel estudante
             } else if (opUsuario == 2) {
-                menuEstudante();
-                System.out.println("Escolha a opção desejada: ");
-                int opEstudante =  scanner.nextInt();
+                int opEstudante = -1;
                 while(opEstudante !=0) {
+                    menuEstudante();
+                    System.out.println("Escolha a opção desejada: ");
+                    opEstudante =  scanner.nextInt();
                     if (opEstudante == 1) {
                         System.out.println("====LIVROS DISPONÍVEIS====");
                         biblioteca.livrosDisponiveis();
@@ -148,8 +156,6 @@ public class Main {
                         if (usuario != null && livro != null) {
 
                             try {
-                                Emprestimo emprestimo = biblioteca.buscarEmprestimoAtivoPorLivro(livro.getId());
-
                                 System.out.println("\n====Confirmação====");
                                 System.out.println("Usuário: " + usuario.getNome());
                                 System.out.println("Livro: " + livro.getTitulo());
@@ -171,6 +177,8 @@ public class Main {
                                 System.out.println(e.getMessage());
                             }
                         }
+                    }else if (opEstudante !=0){
+                        System.out.println("Opção inválida!");
                     }
                 }
                 painelUsuarios();

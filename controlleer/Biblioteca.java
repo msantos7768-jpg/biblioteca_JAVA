@@ -6,6 +6,7 @@ import biblioteca.model.Livro;
 import biblioteca.model.Usuario;
 import biblioteca.model.estudante;
 
+import java.math.BigInteger;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -52,11 +53,12 @@ public class Biblioteca {
     }
 
 
-    public void cadastrarUsuario(String nome, String email, String curso, int matricula){
+    public void cadastrarUsuario(String nome, String email, String curso, BigInteger matricula){
         estudante est = null;
            for (int i = 0; i < usuarios.size(); i++) {
                 if (usuarios.get(i).getEmail().equals(email)) {
                     System.out.println("E-mail já existente");
+                    break;
                 }
             }
         est = new estudante(proximoIdUsuario, nome, email, curso, matricula);
@@ -178,7 +180,9 @@ public class Biblioteca {
         }
     }
 
-    public Emprestimo buscarEmprestimoAtivoPorLivro(int idLivro) {
+    public Emprestimo buscarEmprestimoAtivoPorLivro(int idLivro)
+            throws LivroNaoEmprestadoException {
+
         for (int i = 0; i < emprestimos.size(); i++) {
 
             Emprestimo emprestimo = emprestimos.get(i);
@@ -191,7 +195,7 @@ public class Biblioteca {
         }
 
         throw new LivroNaoEmprestadoException(
-                "O livro não está em empréstimo"
+                "O livro não está em empréstimo."
         );
     }
     public Usuario tentativasUsuario(int idUsuario){
@@ -239,7 +243,8 @@ public class Biblioteca {
     public void livrosDisponiveis(){
         for (int i =0; i <livros.size();i++) {
             if (livros.get(i).isDisponibilidade()){
-                System.out.println(i);
+                System.out.println("ID do Livro: " + livros.get(i).getId()
+                        +"\nNome do Livro: " + livros.get(i).getTitulo()+"\nAutor: "+livros.get(i).getAutor());
             }
         }
         }
