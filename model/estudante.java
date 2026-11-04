@@ -18,7 +18,7 @@ public class estudante extends Usuario {
         this.curso = curso;
     }
 
-    public BigInteger getMatricula() {
+    public int getMatricula() {
         return matricula;
     }
 

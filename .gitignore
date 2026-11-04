@@ -1,0 +1,15 @@
+
+# Arquivos de configuração locais
+.env
+.env.*
+!.env.example
+config-local.properties
+application-local.properties
+
+# Arquivos do ambiente de desenvolvimento
+/shelf/
+/workspace.xml
+/httpRequests/
+/queries/
+/dataSources/
+/dataSources.local.xml
