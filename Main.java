@@ -13,7 +13,7 @@ import java.util.Scanner;
 public class Main {
 
     public static void painelUsuarios() {
-        System.out.println("====SISTEAM DE BIBLIOTECA====");
+        System.out.println("====SISTEMA DE BIBLIOTECA====");
         System.out.println("----Perfil de Usuário----");
         System.out.println("1 - Adm");
         System.out.println("2 - Estudante");

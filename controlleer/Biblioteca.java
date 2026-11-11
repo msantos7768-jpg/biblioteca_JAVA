@@ -53,7 +53,7 @@ public class Biblioteca {
     }
 
 
-    public void cadastrarUsuario(String nome, String email, String curso, BigInteger matricula){
+    public void cadastrarUsuario(String nome, String email, String curso, int matricula){
         estudante est = null;
            for (int i = 0; i < usuarios.size(); i++) {
                 if (usuarios.get(i).getEmail().equals(email)) {
